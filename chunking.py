@@ -1,20 +1,15 @@
 """
-PRIMACY-EKSPERIMENT (ord-for-ord)
-----------------------------------
-Trækker 3 tilfældige sætninger og viser dem ord for ord, i den rigtige
-rækkefølge inden for hver sætning. Der er en kort pause mellem sætningerne,
-så deltageren kan mærke overgangen til en ny sætning.
-
-Den eneste parameter du skal ændre, er 'tid' nedenfor.
+Chunking experiment (ord-for-ord)
+Shows 2 random sentences comprised of 5 words each with varying length to show effects of chunking.
+Short break between sentences to state end and beginning of sentence.
 """
 
 import tkinter as tk
 import random
 
-# ================== PARAMETER DU KAN ÆNDRE ==================
-tid = 1  # antal sekunder hvert ORD vises på skærmen
-pause_mellem_saetninger = 0.5  # sekunder tom skærm mellem sætninger
-# ==============================================================
+# Parameters
+tid = 1 
+pause_mellem_saetninger = 0.5
 
 saetningsliste = [
     "I polish brass lanterns carefully",
@@ -169,14 +164,11 @@ saetningsliste = [
     "They test emergency alarms monthly",
 ]
 
-ANTAL_SAETNINGER = 2  # hvor mange sætninger der trækkes og vises pr. forsøg
+ANTAL_SAETNINGER = 2
 
-# ---------------- Programmet starter her ----------------
 random.shuffle(saetningsliste)
 valgte_saetninger = saetningsliste[:ANTAL_SAETNINGER]
 
-# Byg en flad liste af "hændelser": hvert ord, samt en tom "pause"-hændelse
-# mellem sætningerne, uden at blande ord fra to forskellige sætninger sammen.
 visnings_sekvens = []  # liste af (tekst, varighed_i_sekunder)
 for i, saetning in enumerate(valgte_saetninger):
     for ord in saetning.split():
@@ -192,7 +184,6 @@ root.eval('tk::PlaceWindow . center')
 label = tk.Label(root, text="", font=("Helvetica", 40), wraplength=450, justify="center")
 label.pack(expand=True)
 
-
 def vis_ord(index):
     if index >= len(visnings_sekvens):
         root.destroy()
@@ -201,8 +192,6 @@ def vis_ord(index):
     label.config(text=tekst)
     root.after(int(varighed * 1000), vis_ord, index + 1)
 
-
-# Lille pause før første ord, så vinduet når at blive tegnet
 root.after(1000, vis_ord, 0)
 root.mainloop()
 
